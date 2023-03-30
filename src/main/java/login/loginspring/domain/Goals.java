@@ -1,16 +1,16 @@
 package login.loginspring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "goals")
 public class Goals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    //@Column(name = "USER_ID")
     private String userId;
+
     private Integer orderNum;
     private String category;
 

@@ -31,9 +31,13 @@ public class EasyInputController {
     }
 
     @GetMapping("/easyinput")
-    public String list(Model model) {
-        List<Goals> goals = goalService.findGoals();
-        List<Todos> todos = todoService.findTodos();
+    public String list(Model model, Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal(); //로그인한 사용자 정보
+        String memberId = member.getUserId();
+
+        //List<Goals> goals = goalService.findGoals();
+        List<Goals> goals = goalService.findGoalsByUserId(memberId);
+        List<Todos> todos = todoService.findTodosByUserId(memberId);
         model.addAttribute("goals", goals);
         model.addAttribute("todos", todos);
         return "easyinput/easyinputList";
@@ -51,6 +55,7 @@ public class EasyInputController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Todos todo = new Todos();
+        System.out.println("new easyinput"+ form.getEveryCheck());
 
         Member member = (Member) authentication.getPrincipal(); //로그인한 사용자 정보
         String memberId = member.getUserId();
@@ -96,7 +101,7 @@ public class EasyInputController {
             todo.setIsRepeatFri(0);
             todo.setIsRepeatSat(0);
             todo.setIsRepeatSun(0);
-            todo.setRepeat_montly(form.getMonthCheck());
+            todo.setRepeat_monthly(form.getMonthCheck());
         }
 
         todoService.join(todo);
@@ -138,13 +143,10 @@ public class EasyInputController {
         todo.get().setIsRepeatFri(1);
         todo.get().setIsRepeatSat(1);
         todo.get().setIsRepeatSun(1);
-        todo.get().setRepeat_montly(null);
-        System.out.println("everycheck " + form.getEveryCheck());
+        todo.get().setRepeat_monthly(null);
 
         /* everyweek */
         if(form.getEveryCheck().equals("everyweek")) {
-            System.out.println("in every week check");
-
             if(form.getIsRepeatMon() == null) {  todo.get().setIsRepeatMon(0); }
             if(form.getIsRepeatTue() == null) {  todo.get().setIsRepeatTue(0); }
             if(form.getIsRepeatWed() == null) {  todo.get().setIsRepeatWed(0); }
@@ -163,9 +165,8 @@ public class EasyInputController {
             todo.get().setIsRepeatFri(0);
             todo.get().setIsRepeatSat(0);
             todo.get().setIsRepeatSun(0);
-            todo.get().setRepeat_montly(form.getMonthCheck());
+            todo.get().setRepeat_monthly(form.getMonthCheck());
         }
-        System.out.println("let's " + form.getDelete());
         if(form.getDelete().equals("delete")) {
             todoService.delete(todo.get().getId());
         }

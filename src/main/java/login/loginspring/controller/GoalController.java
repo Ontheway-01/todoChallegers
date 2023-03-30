@@ -42,7 +42,6 @@ public class GoalController {
 
         goals.setUserId(memberId);
         goals.setOrderNum(3);
-
         goals.setCategory(form.getCategory());
 
         goalService.join(goals);
@@ -57,8 +56,10 @@ public class GoalController {
     }
 
     @GetMapping("/goals")
-    public String list(Model model) {
-        List<Goals> goals = goalService.findGoals();
+    public String list(Model model, Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal(); //로그인한 사용자 정보
+        String memberId = member.getUserId();
+        List<Goals> goals = goalService.findGoalsByUserId(memberId);
         model.addAttribute("goals", goals);
         return "goals/goalsList"; // goals 폴더에 있는 goalsList.html 열기
     }
@@ -68,8 +69,8 @@ public class GoalController {
         Optional<Goals> goals = goalService.findById(form.getId());
         goals.get().setCategory(form.getCategory());
         if(form.getDelete().equals("delete")) {
+            todoService.deleteGoal(goals.get());
             goalService.delete(goals.get());
-            todoService.deleteGoal(goals.get().getId());
         }
         else { goalService.join(goals.get()); }
 

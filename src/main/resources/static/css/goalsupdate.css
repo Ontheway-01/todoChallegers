@@ -8,44 +8,15 @@ h4{
         flex-direction: column;
         gap: 30px;
         text-align: center;
-        justify-items: center;
-        align-items: center;
 }
 
-.goalBtn {
-    display: block;
-    position: relative;
-    float: left;
-    width: 150px;
-    height: 40px;
-    padding: 0;
-    margin: 0;
-    font-weight: 600;
-    text-align: center;
-    color: #FFF;
-    border-radius: 30px;
-    border-width:0px;
-    transition: all 0.2s ;
-    background: #50C8FF;
-}
 button:hover {
     background:#0078FF;
-}
-.goal_div {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    gap: 10px;
-    width:450px;
-    height:60px;
 }
 
 .plusGoaloutline{
         color: #6e6e6e;
         border: 2px solid #6aafe6;
-        margin: 40px;
-
 }
 
 .plusGoaloutline:hover {
@@ -72,8 +43,16 @@ button:hover {
     color: #d4dfe6;
 }
 
-div#goalsList{
+#userCategory {
+    width: 400px;
+    height: 50px;
+    border: 1px solid gray;
+    margin-bottom: 40px;
+}
+
+.form-group{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
