@@ -2,71 +2,63 @@
 
 Todo-mate와 같이 오늘 할 일을 관리할 수 있는 서비스입니다. 챌린지를 등록해 목표 달성을 위해 해야할 일을 계획해보세요!
 ## Getting Started
-
 ### Prerequisites
 
 - Java 17 설치
 - IntelliJ 또는 Eclipse 설치
+- H2 Database 1.4.200 버전 설치
+  - `General error: "The write format 1 is smaller than the supported format 2
+[2.0.206/5]" [50000-202] HY000/50000` 오류가 발생한다면, 다시 설치한 이후 ~/test.mv.db 파일을 삭제합니다.
 
 ### Installing
 
 1. cmd에서 원하는 directory로 이동 후 아래의 명령어를 입력합니다.
+```
+  git clone https://github.com/RumosZin/todoChallegers.git
+```
+2. H2 콘솔을 실행합니다.
+  - H2/bin 경로로 이동하고 Window 사용자는 `h2.bat`, Mac 사용자는 `chmod 755 h2.sh` `./h2.sh` 명령어를 통해 H2 콘솔을 실행합니다.
+  - H2 콘솔의 JDBC URL에 최초 한 번 `jdbc:h2:~/test`를 실행합니다.
+  - `C:\Users\{User} 경로에 `test.mv.db` 파일이 생겼는지 확인합니다.
+  - H2 콘솔 재접속 시 JDBC URL을 `jdbc:h2:tcp://localhost/~/test`로 변경한 뒤 접근합니다.
 
+3. 기본으로 제공하는 MEMBER table을 삭제합니다.
 ```
-  git clone 
+drop table MEMBER;
 ```
+
+4. `todoChallengers\sql\ddl.sql`에 있는 create table SQL문을 이용해 **MEMBER / GOALS / TODOS / CHALLENGE** table을 차례로 생성합니다.
 
   
-## Running the tests
+## Running the Todo Challengers
 
-Explain how to run the automated tests for this system
+H2 콘솔이 실행 중이고, H2 Database에 MEMBER / GOALS / TODOS / CHALLENGE table이 생성된 상태여야 합니다.
 
-### Break down into end to end tests
+1. IntelliJ 혹은 Eclipse IDE로 Todo Challengers 프로젝트를 open 합니다.
+2. LoginSpringApplication.java를 실행합니다.
+3. `localhost:8080`으로 접속합니다.
 
-Explain what these tests test and why
+![image](https://github.com/RumosZin/todoChallegers/assets/81238093/2d01dbe1-9f52-4393-98c3-fef7d492ef63)
 
-```
-Give an example
-```
+## Features of the Todo Challengers
+### 할 일 한눈에 보기
 
-### And coding style tests
+- Todo-mate와 같이 왼쪽에는 캘린더, 오른쪽에는 Feed로 오늘 할 일을 한눈에 확인할 수 있습니다.
+- 왼쪽 위에 있는 D-day로 챌린지에 도전한 목록을 확인할 수 있습니다.
+- 할 일을 내일로 미루거나, 수정할 수 있습니다.
 
-Explain what these tests test and why
+![image](https://github.com/RumosZin/todoChallegers/assets/81238093/b2fdcfa1-6836-4021-879a-50b7c97bd8d3)
 
-```
-Give an example
-```
+### 목표, 간편 입력 설정하기
 
-## Deployment
+- Feed에 나타나는 목표들을 등록할 수 있습니다.
+- 간편 입력으로 매일/매주/매월 주기적으로 반복하는 일들을 등록할 수 있습니다.
 
-Add additional notes about how to deploy this on a live system
+![image](https://github.com/RumosZin/todoChallegers/assets/81238093/53a0dd3b-926e-479f-8bad-5daa20a3b804)
 
-## Built With
+### 챌린지 설정하기
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- 주요한 목표에 대해서 챌린지를 설정할 수 있습니다.
+- '할 일 한눈에 보기'에서 챌린지를 위해 남은 날짜를 확인할 수 있습니다.
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+![image](https://github.com/RumosZin/todoChallegers/assets/81238093/413833fb-6ad7-45ff-8a87-80b1b2e18bfe)
